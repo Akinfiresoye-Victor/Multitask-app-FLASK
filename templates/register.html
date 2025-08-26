@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Flash Messages -->
+{% for message in get_flashed_messages() %}
+  {% if message %}
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endif %}
+{% endfor %}
+
+<!-- Registration Form -->
+<div class="container my-4">
+  <form method="POST" class="p-4 border rounded bg-light shadow">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+      {{ form.name.label(class="form-label") }}
+      {{ form.name(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.username.label(class="form-label") }}
+      {{ form.username(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.password.label(class="form-label") }}
+      {{ form.password(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.password2.label(class="form-label") }}
+      {{ form.password2(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.key_word.label(class="form-label") }}
+      {{ form.key_word(class="form-control") }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+  </form>
+</div>
+
+<!-- Message for Users Who Already Have an Account -->
+<div class="container my-4 text-center">
+  <p class="text-muted">Already have an account? <a href="{{ url_for('login') }}" class="btn btn-link">Login here</a>.</p>
+</div>
+
+<!-- Registered Users Table -->
+<div class="container my-4">
+  <h3>Registered Users</h3>
+  <table class="table table-hover table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Username</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in registered_user %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.username }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Login Button (if users are already registered) -->
+<div class="container my-4 text-center">
+  <a href="{{ url_for('login') }}" class="btn btn-success">Login</a>
+</div>
+
+{% endblock %}

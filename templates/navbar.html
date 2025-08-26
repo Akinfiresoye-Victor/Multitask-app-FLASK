@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{url_for('homepage')}}">Homepage</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{url_for('bible')}}">Bible</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('weather')}}">Today's weather</a>
+          </li>
+
+
+{%if current_user.is_authenticated%}            
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('updates')}}">updates</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('password_manager_gate')}}">Check saved passwords</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('schedules')}}">Set a schedule</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('update', id=current_user.id)}}">Update User Profile</a>
+            </li>
+{%else%}
+            <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true">updates</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true">Check saved passwords</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true">Set a schedule</a>
+            </li>
+            
+{%endif%}            
+        </ul>
+
+      </div>
+    </div>
+</nav>

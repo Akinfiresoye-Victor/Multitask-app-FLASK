@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Flash Messages -->
+{% for message in get_flashed_messages() %}
+  <div class="alert alert-primary alert-dismissible fade show auto-dismiss" role="alert">
+    <strong>{{ message }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+
+<script>
+  // Auto-dismiss all alerts after 5 seconds
+  setTimeout(() => {
+    const alerts = document.querySelectorAll('.auto-dismiss');
+    alerts.forEach(alert => {
+      alert.classList.remove('show');
+      alert.classList.add('fade');
+      setTimeout(() => alert.remove(), 500); // Remove after fade-out
+    });
+  }, 5000); // 5 seconds
+</script>
+
+{% if id == current_user.id %}
+<div class="container mt-5">
+    <!-- Card for User Update Form -->
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center mb-4">Update Your Profile</h2>
+        <form action="/update/{{ update.id }}" method="POST">
+            {{ form.hidden_tag() }}
+            
+            <div class="mb-3">
+                <label for="name" class="form-label">Full Name</label>
+                {{ form.name(class="form-control", id="name") }}
+            </div>
+
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                {{ form.username(class="form-control", id="username") }}
+            </div>
+
+            <div class="mb-3">
+                <label for="key_word" class="form-label">Keyword</label>
+                {{ form.key_word(class="form-control", id="key_word") }}
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Additional Actions -->
+    <div class="mt-4 d-flex justify-content-between">
+        <a href="{{ url_for('update_password', id=current_user.id) }}" class="btn btn-outline-success btn-lg">Change Password</a>
+        <a href="{{ url_for('delete_user', id=current_user.id) }}" class="btn btn-outline-danger btn-lg">Delete Account</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Flash Messages -->
+{% for message in get_flashed_messages() %}
+  <div class="alert alert-primary alert-dismissible fade show auto-dismiss" role="alert">
+    <strong>{{ message }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+
+<script>
+  // Auto-dismiss all alerts after 5 seconds
+  setTimeout(() => {
+    const alerts = document.querySelectorAll('.auto-dismiss');
+    alerts.forEach(alert => {
+      alert.classList.remove('show');
+      alert.classList.add('fade');
+      setTimeout(() => alert.remove(), 500); // Remove after fade-out
+    });
+  }, 5000); // 5 seconds
+</script>
+
+<div class="container mt-5">
+    <!-- Introduction Section -->
+    <div class="text-center mb-5 p-4 bg-light shadow rounded">
+        <h1 class="text-success fw-bold">Welcome to Your Financial Dashboard</h1>
+        <p class="lead text-secondary mt-3">
+            Stay updated with real-time exchange rates and stock price trends. 
+            Use this dashboard to convert currencies or explore the latest exchange rates 
+            to make informed decisions for your investments and transactions.
+        </p>
+    </div>
+
+    <!-- Exchange Rates Form Section -->
+    <h2 class="text-center mb-4 text-dark">Daily Exchange Rates</h2>
+    <div class="card shadow-lg p-4">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                {{ form.currency1.label(class="form-label text-success") }}
+                {{ form.currency1(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                {{ form.currency2.label(class="form-label text-success") }}
+                {{ form.currency2(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                {{ form.currency3.label(class="form-label text-success") }}
+                {{ form.currency3(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                {{ form.currency4.label(class="form-label text-success") }}
+                {{ form.currency4(class="form-control") }}
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg w-100">{{ form.submit.label.text }}</button>
+        </form>
+    </div>
+
+    <hr class="my-4">
+
+    <!-- Conversion Details Section -->
+    {% if data_json %}
+    <div class="card shadow-lg p-4 bg-white">
+        <h3 class="text-success fw-bold text-center">Conversion Details</h3>
+        <table class="table table-striped table-hover mt-3">
+            <tr>
+                <th class="text-success">Base Currency</th>
+                <td>{{ data_json.base }}</td>
+            </tr>
+            <tr>
+                <th class="text-success">Date</th>
+                <td>{{ data_json.date }}</td>
+            </tr>
+            <tr>
+                <th class="text-success">Rates</th>
+                <td>
+                    <ul class="list-group">
+                    {% for currency, rate in data_json.rates.items() %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ currency }}
+                            <span class="badge bg-success rounded-pill">{{ rate }}</span>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

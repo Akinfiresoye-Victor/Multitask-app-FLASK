@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Flash Messages -->
+{% for message in get_flashed_messages() %}
+  {% if message %}
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endif %}
+{% endfor %}
+
+<!-- Weather Form -->
+<div class="container my-4">
+  <form method="POST" class="p-4 border rounded bg-light shadow">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      {{ form.city.label(class="form-label") }}
+      {{ form.city(class="form-control") }}
+    </div>
+    <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+  </form>
+</div>
+
+<!-- Weather Data Table -->
+{% if my_weather %}
+  <div class="container my-4">
+    <table class="table table-hover table-bordered table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">City</th>
+          <th scope="col">Weather</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>{{ city2|capitalize }}</strong></td>
+          <td>{{ my_weather }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% endif %}
+
+{% endblock %}

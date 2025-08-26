@@ -1,0 +1,113 @@
+{% extends 'base.html'%}
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+  <div class="alert alert-primary alert-dismissible fade show" role="alert" id="autoDismiss">
+    <strong>{{ message }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+
+<script>
+  // Auto-dismiss the alert after 5 seconds
+  setTimeout(() => {
+    const alert = document.getElementById('autoDismiss');
+    if (alert) {
+      alert.classList.remove('show');
+      alert.classList.add('fade');
+      setTimeout(() => alert.remove(), 500); // Remove after fade-out
+    }
+  }, 5000); // 5 seconds
+</script>
+{% endfor %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multitask App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+    .hero {
+      background-color: #007bff;
+      color: white;
+      padding: 50px 20px;
+      text-align: center;
+    }
+    .feature {
+      padding: 20px;
+      border-radius: 5px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header class="bg-dark text-white p-3">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="h3">Multitask App</h1>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h2>Organize Your Life with Multitask App</h2>
+    <p>The ultimate tool for managing tasks, saving passwords, and staying productive.</p>
+{% if current_user.is_authenticated %}
+<h2>Youre already logged in</h2>
+{%else%}
+    <a href="{{url_for('register')}}" class="btn btn-light btn-lg me-2">Get Started</a>
+    <a href="/login" class="btn btn-outline-light btn-lg">Login</a>
+    {%endif%}
+  </section>
+  
+  <section id="features" class="container my-5">
+    <h3 class="text-center mb-4">Key Features</h3>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="feature">
+          <h4>Task Management</h4>
+          <p>Plan, prioritize, and track your daily tasks efficiently.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature">
+          <h4>Password Manager</h4>
+          <p>Securely store and manage your passwords with ease.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature">
+          <h4>Productivity Insights</h4>
+          <p>Know whats the current rate is around the world and plan your next move.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="container my-5">
+    <h3 class="text-center mb-4">About Multitask App</h3>
+    <p>
+      Multitask App is your all-in-one solution for organizing life’s demands. From managing tasks to storing passwords,
+      we provide a secure and user-friendly platform to keep you ahead.
+    </p>
+  </section>
+
+  <footer id="contact" class="bg-dark text-white text-center p-4">
+    <p>Contact us: support@multitaskapp.com | Follow us on social media: 
+      <a href="#" class="text-white text-decoration-none">Facebook</a>, 
+      <a href="#" class="text-white text-decoration-none">Twitter</a>, 
+      <a href="#" class="text-white text-decoration-none">LinkedIn</a>
+    </p>
+    <p>&copy; 2024 Multitask App. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{%endblock%}

@@ -1,0 +1,2 @@
+api_key_weather='0d43bb407ec7df4f30e0034ff8fffb5e'
+api_key_currency='50f6eedd3e95458aa3dfd9eb9aa22f0b'

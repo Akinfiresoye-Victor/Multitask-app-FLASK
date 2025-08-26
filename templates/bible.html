@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Flash Messages -->
+{% for message in get_flashed_messages() %}
+  <div class="alert alert-primary alert-dismissible fade show auto-dismiss" role="alert">
+    <strong>{{ message }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+
+<script>
+  // Auto-dismiss all alerts after 5 seconds
+  setTimeout(() => {
+    const alerts = document.querySelectorAll('.auto-dismiss');
+    alerts.forEach(alert => {
+      alert.classList.remove('show');
+      alert.classList.add('fade');
+      setTimeout(() => alert.remove(), 500); // Remove after fade-out
+    });
+  }, 5000); // 5 seconds
+</script>
+
+<!-- Introduction Section -->
+<div class="text-center mt-4 py-4 bg-light shadow rounded">
+    <h1 class="fw-bold text-primary">Welcome to the Bible Page</h1>
+    <p class="lead text-secondary mt-3 px-3">
+        <em>"The Word of God is a lamp to our feet and a light to our path."</em> 
+        Explore the Bible to find guidance, wisdom, and inspiration for your daily life. Dive into scripture 
+        by selecting a book, chapter, and verse below.
+    </p>
+</div>
+
+<!-- Form Section -->
+<div class="shadow p-4 mt-5 bg-body-tertiary rounded">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.book.label(class="form-label") }}
+            {{ form.book(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.chapter.label(class="form-label") }}
+            {{ form.chapter(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.verse.label(class="form-label") }}
+            {{ form.verse(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.submit(class="btn btn-primary btn-lg w-100") }}
+        </div>
+    </form>
+</div>
+
+<!-- Display Result -->
+{% if result %}
+<div class="mt-5 text-center shadow p-4 bg-white rounded">
+    <h3 class="text-success fw-bold">Bible Verse</h3>
+    <blockquote class="blockquote mt-3">
+        <p class="mb-0 fs-4">{{ result }}</p>
+    </blockquote>
+</div>
+{% endif %}
+
+{% endblock %}
