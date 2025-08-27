@@ -42,7 +42,7 @@ def verify_password(self, password):
 def load_users(user_id):
     #User.query.get(int(user_id))-> this has been depreciated
     return db.session.get(User, user_id)
-    #db.session.execute(db.select(User).filter_by(id=1)).scalar()-> this can also be used if we want to filter
+    #db.session.execute(db.select(User).filter_by(id=1)).scalar()-> this can also be used if we want to filter 
         
 #homepage    
 @app.route('/')
