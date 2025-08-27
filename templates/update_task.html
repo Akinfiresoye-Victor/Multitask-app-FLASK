@@ -41,31 +41,4 @@
   </form>
 </div>
 
-<!-- Task List Table -->
-<div class="container my-4">
-  <h3>My Tasks</h3>
-  <table class="table table-hover table-bordered">
-    <thead class="table-dark">
-      <tr>
-        <th>Task</th>
-        <th>Date</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for task in todolist %}
-        <tr>
-          <td>{{ task.task }}</td>
-          <td>{{ task.date }}</td>
-          <td>
-            <a href="{{ url_for('delete', id=task.id) }}" class="btn btn-success btn-sm">Completed</a>
-            <a href="{{ url_for('update_schedule', id=task.id) }}" class="btn btn-secondary btn-sm">Update</a>
-          </td>
-            
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-
 {% endblock %}
